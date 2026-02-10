@@ -22,19 +22,18 @@
 
 ## Paper Review (TBD)
 
-* [World Foundation Model](robot-foundation-model/world-foundation-model/README.md)
-  * [Cosmos-Predict1](robot-foundation-model/world-foundation-model/cosmos-predict1.md)
-  * [Cosmos-Predict2.5](robot-foundation-model/world-foundation-model/nvidia-cosmos-world-foundation-model.md)
-
-* [Robot Foundation Model](robot-foundation-model/robot-foundation-model/README.md)
-  * [Reasoning VLM (Vision-Language Model)](robot-foundation-model/robot-foundation-model/reasoning-vlm-vision-language-model/README.md)
-    * [Cosmos-Reason 1](robot-foundation-model/robot-foundation-model/reasoning-vlm-vision-language-model/cosmos-reason-1.md)
-  * [VLA (Vision-Language-Action)](robot-foundation-model/robot-foundation-model/vla-vision-language-action/README.md)
-    * [DeepMind RT-2](robot-foundation-model/robot-foundation-model/vla-vision-language-action/deepmind-rt-2.md)
-    * [OpenVLA](robot-foundation-model/robot-foundation-model/vla-vision-language-action/openvla.md)
-    * [Gemini Robotics](robot-foundation-model/robot-foundation-model/vla-vision-language-action/gemini-robotics.md)
-    * [NVIDIA GR00T N1](robot-foundation-model/robot-foundation-model/vla-vision-language-action/nvidia-gr00t-n1.md)
-    * [π ∗ 0.6 : a VLA That Learns From Experience](robot-foundation-model/robot-foundation-model/vla-vision-language-action/p-0.6-a-vla-that-learns-from-experience.md)
+* [World Foundation Model](paper-review-tbd/world-foundation-model/README.md)
+  * [Cosmos-Predict1](paper-review-tbd/world-foundation-model/cosmos-predict1.md)
+  * [Cosmos-Predict2.5](paper-review-tbd/world-foundation-model/cosmos-predict2.5.md)
+* [Robot Foundation Model](paper-review-tbd/robot-foundation-model/README.md)
+  * [Reasoning VLM (Vision-Language Model)](paper-review-tbd/robot-foundation-model/reasoning-vlm-vision-language-model/README.md)
+    * [Cosmos-Reason 1](paper-review-tbd/robot-foundation-model/reasoning-vlm-vision-language-model/cosmos-reason-1.md)
+  * [VLA (Vision-Language-Action)](paper-review-tbd/robot-foundation-model/vla-vision-language-action/README.md)
+    * [DeepMind RT-2](paper-review-tbd/robot-foundation-model/vla-vision-language-action/deepmind-rt-2.md)
+    * [OpenVLA](paper-review-tbd/robot-foundation-model/vla-vision-language-action/openvla.md)
+    * [Gemini Robotics](paper-review-tbd/robot-foundation-model/vla-vision-language-action/gemini-robotics.md)
+    * [NVIDIA GR00T N1](paper-review-tbd/robot-foundation-model/vla-vision-language-action/nvidia-gr00t-n1.md)
+    * [π ∗ 0.6 : a VLA That Learns From Experience](paper-review-tbd/robot-foundation-model/vla-vision-language-action/p-0.6-a-vla-that-learns-from-experience.md)
 
 ## Architecture & Best Practice
 

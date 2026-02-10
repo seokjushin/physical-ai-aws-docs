@@ -78,10 +78,6 @@ AWS의 검증된 인프라 위에서 실행되므로 데이터 보안(VPC 내 �
 
 모델을 배포할 인스턴스 타입과 개수 설정
 
-<figure><img src="../.gitbook/assets/Screenshot 2026-02-04 at 8.31.16 PM.png" alt=""><figcaption></figcaption></figure>
-
-
-
 ***
 
 ### References
