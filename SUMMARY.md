@@ -15,6 +15,7 @@
   * [2. Isaac Sim / Isaac Lab 환경 확인](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/2.-isaac-sim-isaac-lab.md)
   * [3. AWS Batch를 활용한 대규모 학습](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/3.-aws-batch.md)
   * [4. IsaacSim에서 학습된 모델 로드](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/4.-isaacsim.md)
+  * [5. GR00T N1 테스트](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/5.-gr00t-n1.md)
 * [NVIDIA Cosmos Predict 2.5 배포](physical-ai-on-aws-guide/nvidia-cosmos-predict-2.5/README.md)
   * [Cosmos NIM + EKS](physical-ai-on-aws-guide/nvidia-cosmos-predict-2.5/cosmos-nim-+-eks.md)
   * [AWS Batch + EC2](physical-ai-on-aws-guide/nvidia-cosmos-predict-2.5/aws-batch-+-ec2.md)
