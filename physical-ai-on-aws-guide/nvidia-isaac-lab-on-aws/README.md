@@ -14,6 +14,18 @@ metaLinks:
 * [**Amazon EFS**](https://docs.aws.amazon.com/ko_kr/efs/latest/ug/whatisefs.html): 배치 작업 실행 간 학습 체크포인트와 결과를 영구적으로 보관하여 작업 중단 없이 지속적인 학습이 가능합니다.
 * [**AWS CloudFormation**](https://docs.aws.amazon.com/ko_kr/AWSCloudFormation/latest/UserGuide/Welcome.html): 템플릿 기반으로 전체 인프라를 자동 구성하여 팀 간 표준화된 환경을 빠르게 공유할 수 있습니다.
 
+### Physical AI와 Sim-to-Real 파이프라인
+
+Physical AI는 실제 물리 세계에서 동작하는 로봇을 위한 AI입니다. 로봇이 걷기, 물건 잡기 등의 동작을 학습하려면 수백만 번의 시행착오가 필요한데, 실제 로봇으로 이를 수행하면 시간과 비용이 막대하고 로봇이 파손될 위험이 있습니다.
+
+**Sim-to-Real** 접근법은 이 문제를 해결합니다:
+1. **시뮬레이션 환경 구축** — GPU 가속 물리 엔진(PhysX)으로 현실과 유사한 환경을 생성
+2. **대규모 병렬 학습** — 수천 개의 가상 로봇을 동시에 시뮬레이션하며 강화학습 수행
+3. **분산 학습으로 가속** — 여러 GPU/노드에 걸쳐 학습을 분산하여 수일 걸릴 작업을 수시간으로 단축
+4. **실제 로봇에 배포** — 학습된 정책(Policy)을 실제 로봇 하드웨어에 전이(Transfer)
+
+이 워크숍에서는 1~3단계를 AWS 인프라에서 실습합니다.
+
 ### 아키텍처 설명
 
 <figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
@@ -27,21 +39,21 @@ AWS Batch에 NVIDIA Isaac Lab을 배포하는 전체 아키텍처 입니다.
 
 ### **실습 과정**
 
-[**1. 클라우드 인프라 준비**](1.-gpu.md)
+[**1. 클라우드 인프라 준비 및 환경 확인**](1.-gpu.md)
 
-AWS CloudFormation 템플릿으로 환경을 자동으로 구성합니다. Dockerfile 기반 컨테이너로 시뮬레이션 및 학습 환경을 표준화하여 팀 간 공유가 쉽고 설정 시간을 절약할 수 있습니다. EFS 스토리지, NAT Gateway, EC2 인스턴스, 보안 그룹 등 필요한 모든 리소스가 자동으로 생성됩니다.
+AWS CloudFormation 템플릿으로 환경을 자동으로 구성합니다. Dockerfile 기반 컨테이너로 시뮬레이션 및 학습 환경을 표준화하여 팀 간 공유가 쉽고 설정 시간을 절약할 수 있습니다. EC2 단일 인스턴스에서 시뮬레이션과 학습이 정상 작동하는지 확인한 후, 검증된 컨테이너를 Amazon ECR에 업로드합니다.
 
-[**2. 시뮬레이션과 학습 환경 확인**](2.-isaac-sim-isaac-lab.md)
-
-먼저 EC2 단일 인스턴스에서 시뮬레이션과 ㅎ을 테스트합니다. 로봇이 제대로 시뮬레이션되고 학습이 정상 작동하는지 확인한 후, 검증된 컨테이너를 Amazon ECR에 업로드합니다.
-
-[**3. 대규모 학습 실행**](3.-aws-batch.md)
+[**2. 대규모 학습 실행**](2.-aws-batch.md)
 
 검증된 컨테이너로 AWS Batch 작업을 시작합니다. 여러 노드로 자동 확장되며, AWS Batch가 오케스트레이션을 담당합니다. 학습 중 체크포인트와 결과는 EFS에 저장되고, 로그는 CloudWatch에 기록됩니다.
 
-[**4. 모델 테스트**](4.-isaacsim.md)
+[**3. 모델 테스트**](3.-isaacsim.md)
 
 EC2 인스턴스에서 학습된 모델을 실행하여 성능을 확인합니다. 개선점을 파악하고 다시 학습하는 과정을 AWS Batch로 빠르게 반복하여, 새로운 로봇 동작을 신속하게 개발할 수 있습니다.
+
+[**5. 실무 팁 및 참고 사항**](5.-tips.md)
+
+S3, EFS, ECR 등 워크숍에서 활용하는 AWS 서비스의 사용법과 EC2 인스턴스 SSH 접속 방법을 정리합니다.
 
 ***
 
