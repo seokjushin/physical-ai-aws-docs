@@ -11,11 +11,11 @@
 ## Physical AI on AWS 구현 가이드 <a href="#physical-ai-on-aws-guide" id="physical-ai-on-aws-guide"></a>
 
 * [NVIDIA Isaac Lab on AWS](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/README.md)
-  * [1. 클라우드 인프라 준비](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/1.-gpu.md)
-  * [2. Isaac Sim / Isaac Lab 환경 확인](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/2.-isaac-sim-isaac-lab.md)
-  * [3. AWS Batch를 활용한 대규모 학습](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/3.-aws-batch.md)
-  * [4. IsaacSim에서 학습된 모델 로드](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/4.-isaacsim.md)
-  * [5. GR00T N1 테스트](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/5.-gr00t-n1.md)
+  * [1. 클라우드 인프라 준비 및 환경 확인](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/1.-infra-setup.md)
+  * [2. AWS Batch를 활용한 대규모 학습](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/2.-aws-batch.md)
+  * [3. IsaacSim에서 학습된 모델 로드](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/3.-isaacsim.md)
+  * [4. GR00T N1 추론 테스트](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/4.-gr00t-n1.md)
+  * [5. 실무 팁 및 참고 사항](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/5.-tips.md)
 * [NVIDIA Cosmos Predict 2.5 배포](physical-ai-on-aws-guide/nvidia-cosmos-predict-2.5/README.md)
   * [Cosmos NIM + EKS](physical-ai-on-aws-guide/nvidia-cosmos-predict-2.5/cosmos-nim-+-eks.md)
   * [AWS Batch + EC2](physical-ai-on-aws-guide/nvidia-cosmos-predict-2.5/aws-batch-+-ec2.md)
