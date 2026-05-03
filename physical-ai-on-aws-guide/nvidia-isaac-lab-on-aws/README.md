@@ -59,6 +59,10 @@ EC2 인스턴스에서 학습된 모델을 IsaacSim에 로드하여 시각적으
 
 NVIDIA GR00T N1 Foundation Model을 활용하여 자연어 명령과 카메라 영상 기반의 로봇 제어를 테스트합니다. RL Policy와 VLA Model의 차이를 비교하고, Foundation Model 기반 로봇 제어의 가능성을 확인합니다.
 
+[**6. GR00T Fine-tuning on AWS Batch**](6.-gr00t-finetune.md)
+
+커스텀 로봇 데이터셋에 맞게 GR00T VLA 모델을 fine-tuning합니다. CDK가 CodeBuild를 자동으로 트리거하여 학습 컨테이너를 빌드하고, AWS Batch에서 GPU 학습을 실행합니다. 학습 결과는 EFS를 통해 DCV에서 바로 확인할 수 있습니다.
+
 [**부록. 실무 팁 및 참고 사항**](99-tips.md)
 
 S3, EFS, ECR 등 워크숍에서 활용하는 AWS 서비스의 사용법과 EC2 인스턴스 SSH 접속 방법을 정리합니다.
