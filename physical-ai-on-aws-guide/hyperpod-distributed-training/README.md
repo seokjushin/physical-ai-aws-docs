@@ -60,12 +60,14 @@ description: SageMaker HyperPod로 Physical AI 분산 학습 실행하기
 ┌─────────────────────────────────────────────────────────┐
 │ HyperPod Cluster (SLURM Managed)                        │
 │  ├─ head   (ml.m5.xlarge)    — 컨트롤러, 상시 운영       │
-│  ├─ sim    (ml.g5.12xlarge)  — IsaacLab 시뮬레이션       │
-│  ├─ train  (ml.g6e.12xlarge) — VLA/RL 학습              │
-│  └─ debug  (ml.g5.4xlarge)   — 디버깅/시각화            │
+│  └─ train  (ml.g5.4xlarge)   — VLA Fine-tuning (1×A10G) │
+│           (ml.g5.12xlarge)   — 멀티GPU (4×A10G, 선택)   │
 ├─────────────────────────────────────────────────────────┤
 │ Storage                                                  │
 │  ├─ FSx for Lustre (1.2TB) ← /fsx 마운트               │
+│  │   /fsx/envs/gr00t — Python 가상환경 (공유)            │
+│  │   /fsx/datasets   — S3 자동 동기화 (DRA Import)      │
+│  │   /fsx/checkpoints — S3 자동 백업 (DRA Export)       │
 │  └─ S3 Data Bucket ↔ FSx 자동 동기화                    │
 ├─────────────────────────────────────────────────────────┤
 │ Networking                                               │
