@@ -60,8 +60,8 @@ description: SageMaker HyperPod로 Physical AI 분산 학습 실행하기
 ┌─────────────────────────────────────────────────────────┐
 │ HyperPod Cluster (SLURM Managed)                        │
 │  ├─ head   (ml.m5.xlarge)    — 컨트롤러, 상시 운영       │
-│  └─ train  (ml.g5.4xlarge)   — VLA Fine-tuning (1×A10G) │
-│           (ml.g5.12xlarge)   — 멀티GPU (4×A10G, 선택)   │
+│  └─ gpu    (ml.g6e.12xlarge) — 4×L40S (Fallback 우선순위)│
+│           (ml.g6/g7e/g5)    — 용량 부족 시 자동 전환     │
 ├─────────────────────────────────────────────────────────┤
 │ Storage                                                  │
 │  ├─ FSx for Lustre (1.2TB) ← /fsx 마운트               │
@@ -107,11 +107,15 @@ S3에 학습 데이터를 업로드하면 FSx에 자동 동기화됩니다. LeRo
 
 SLURM을 사용해 GR00T N1.7 모델 Fine-tuning 작업을 제출하고 모니터링합니다. GR00T N1.7은 최신 버전으로 3B 파라미터를 가지며 LeRobot v2 형식의 데이터를 지원합니다.
 
-[**5. MLflow 실험 추적**](5.-mlflow-tracking.md)
+[**5. RL 학습 (Isaac Lab — Advanced)**](5.-rl-training.md)
+
+Isaac Sim 컨테이너에서 SO-101 로봇 RL 학습을 headless로 실행합니다. GR00T 학습 결과의 closed-loop 시뮬레이션 검증도 포함합니다.
+
+[**6. MLflow 실험 추적**](6.-mlflow-tracking.md)
 
 학습 메트릭을 MLflow로 추적하고, 실험 결과를 비교합니다.
 
-[**6. 리소스 정리**](6.-cleanup.md)
+[**7. 리소스 정리**](7.-cleanup.md)
 
 실습 후 CDK로 전체 인프라를 삭제합니다.
 
