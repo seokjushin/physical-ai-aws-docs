@@ -95,7 +95,7 @@ flowchart TB
             subgraph PriSub["Private Subnet"]
                 subgraph Cluster["HyperPod Cluster (SLURM Managed)"]
                     Head["Head Node\n(ml.m5.xlarge)\n컨트롤러, 상시 운영"]
-                    GPU["Compute Nodes\n(ml.g6e.12xlarge · 4×L40S)\nFallback: ml.g6 / g7e / g5"]
+                    GPU["Compute Nodes\n(ml.g6e.12xlarge · 4×L40S)\nml.g6 / p4d / p5"]
                 end
 
                 subgraph Storage["Storage"]
