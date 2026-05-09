@@ -155,9 +155,9 @@ Jump Host를 경유해 Head Node에 SSH 접속하고, SLURM과 FSx 상태를 확
 
 S3에 학습 데이터를 업로드하면 FSx에 자동 동기화됩니다. LeRobot v2 형식의 데이터셋 구조를 준비합니다.
 
-[**4. VLA 학습 실행 (GR00T N1.7 Fine-tuning)**](4.-vla-training.md)
+[**4. VLA 학습 실행 (GR00T Fine-tuning)**](4.-vla-training.md)
 
-SLURM을 사용해 GR00T N1.7 모델 Fine-tuning 작업을 제출하고 모니터링합니다. GR00T N1.7은 최신 버전으로 3B 파라미터를 가지며 LeRobot v2 형식의 데이터를 지원합니다.
+SLURM을 사용해 GR00T VLA 모델 Fine-tuning 작업을 제출하고 모니터링합니다. N1.6 (기본, HF 권한 불필요) 또는 N1.7 (gated) 중 선택할 수 있으며, 두 버전 모두 동일한 워크플로우를 사용합니다.
 
 [**5. RL 학습 (Isaac Lab — Advanced)**](5.-rl-training.md)
 
