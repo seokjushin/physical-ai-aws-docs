@@ -161,13 +161,17 @@ SLURM을 사용해 GR00T VLA 모델 Fine-tuning 작업을 제출하고 모니터
 
 [**5. RL 학습 (Isaac Lab — Advanced)**](5.-rl-training.md)
 
-Isaac Sim 컨테이너에서 SO-101 로봇 RL 학습을 headless로 실행합니다. GR00T 학습 결과의 closed-loop 시뮬레이션 검증도 포함합니다.
+Isaac Sim 컨테이너에서 SO-101 로봇 RL 학습을 headless로 실행합니다.
 
-[**6. MLflow 실험 추적**](6.-mlflow-tracking.md)
+[**6. 시뮬레이션 검증 (Closed-loop Evaluation)**](6.-simulation-verification.md)
+
+HyperPod에서 학습한 VLA 모델을 Isaac Lab on AWS EC2에서 closed-loop 시뮬레이션으로 검증합니다.
+
+[**7. MLflow 실험 추적**](7.-mlflow-tracking.md)
 
 학습 메트릭을 MLflow로 추적하고, 실험 결과를 비교합니다.
 
-[**7. 리소스 정리**](7.-cleanup.md)
+[**8. 리소스 정리**](8.-cleanup.md)
 
 실습 후 CDK로 전체 인프라를 삭제합니다.
 
