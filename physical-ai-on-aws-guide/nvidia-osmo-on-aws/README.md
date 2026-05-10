@@ -5,7 +5,7 @@ metaLinks:
     - ./
 ---
 
-# NVIDIA OSMO on AWS EKS
+# NVIDIA OSMO on AWS EKS (TBU)
 
 이 실습에서는 AWS EKS 위에 NVIDIA OSMO를 배포하고, GR00T Fine-tuning 워크플로를 OSMO CLI로 실행합니다. CDK로 인프라를 원클릭 배포하고, OSMO workflow YAML 한 장으로 GPU 학습을 오케스트레이션합니다.
 

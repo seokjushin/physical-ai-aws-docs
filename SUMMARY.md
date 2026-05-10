@@ -17,6 +17,7 @@
   * [4. IsaacSim에서 학습된 모델 로드](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/4.-isaacsim.md)
   * [5. GR00T N1 추론 테스트](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/5.-gr00t-n1.md)
   * [6. GR00T Fine-tuning on AWS Batch](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/6.-gr00t-finetune.md)
+  * [7. Closed-Loop 평가](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/7.-evaluation.md)
   * [부록. 실무 팁 및 참고 사항](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/99-tips.md)
 * [HyperPod 분산 학습](physical-ai-on-aws-guide/hyperpod-distributed-training/README.md)
   * [1. 인프라 배포](physical-ai-on-aws-guide/hyperpod-distributed-training/1.-infra-deploy.md)
