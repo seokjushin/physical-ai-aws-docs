@@ -1,67 +1,113 @@
 ---
-description: NVIDIA Isaac Lab으로 로봇 학습하기
+description: AWS에서 강화학습(RL)부터 Vision-Language-Action(VLA) Foundation Model까지, Physical AI 전체 파이프라인을 실습합니다
 metaLinks:
   alternates:
     - ./
 ---
 
-# NVIDIA Isaac Lab on AWS
+# Physical AI End-to-End on AWS
 
-이 실습에서는 AWS에서 Isaac Lab을 활용해 로봇 행동을 학습하는 방법을 배웁니다. 시뮬레이션된 로봇이 작업을 수행하도록 학습시키고, AWS Batch로 여러 컴퓨팅 노드에 걸쳐 학습을 확장하여 프로세스를 가속화합니다.
+이 워크숍은 AWS 인프라 위에서 Physical AI의 두 가지 핵심 학습 패러다임을 모두 다룹니다. NVIDIA Isaac Lab으로 휴머노이드 로봇의 **강화학습(RL) 정책**을 학습시키고, NVIDIA GR00T로 자연어 명령을 따르는 **Vision-Language-Action(VLA) Foundation Model**을 fine-tuning한 뒤, 시뮬레이션 환경에서 closed-loop으로 검증합니다.
 
 * [**AWS Batch**](https://docs.aws.amazon.com/ko_kr/batch/latest/userguide/what-is-batch.html): 워크로드 양과 규모에 따라 컴퓨팅 리소스를 자동으로 프로비저닝하고 워크로드 분산을 최적화하여, 비용을 절감하면서도 단일 GPU 인스턴스보다 훨씬 짧은 시간에 정교한 로봇 학습을 수행할 수 있습니다.
+* [**Amazon SageMaker**](https://docs.aws.amazon.com/ko_kr/sagemaker/latest/dg/whatis.html): Training Job으로 GR00T VLA 모델을 학습하고, Model Registry로 버전을 관리하며, Real-time Endpoint로 즉시 REST API 추론 환경을 제공합니다.
 * [**Amazon ECR**](https://docs.aws.amazon.com/ko_kr/AmazonECR/latest/userguide/what-is-ecr.html): Docker 컨테이너를 활용하면 설정 시간을 크게 줄이고, 대규모 분산 학습과 시뮬레이션 프로그램 전반에 걸쳐 재사용 가능한 자산과 일관된 표준을 제공할 수 있습니다.
-* [**Amazon EFS**](https://docs.aws.amazon.com/ko_kr/efs/latest/ug/whatisefs.html): 배치 작업 실행 간 학습 체크포인트와 결과를 영구적으로 보관하여 작업 중단 없이 지속적인 학습이 가능합니다.
+* [**Amazon EFS**](https://docs.aws.amazon.com/ko_kr/efs/latest/ug/whatisefs.html): RL 체크포인트, GR00T fine-tuning 결과, 시뮬레이션 에셋을 여러 인스턴스가 공유하여 학습 → 추론 → 평가 단계를 끊김 없이 연결합니다.
 * [**AWS CDK**](https://docs.aws.amazon.com/ko_kr/cdk/v2/guide/home.html): 프로그래밍 언어로 클라우드 인프라를 정의하고, 한 번의 명령으로 전체 환경을 자동 프로비저닝하여 팀 간 표준화된 환경을 빠르게 공유할 수 있습니다.
 
-### Physical AI와 Sim-to-Real 파이프라인
+### Physical AI와 두 가지 학습 패러다임
 
 Physical AI는 실제 물리 세계에서 동작하는 로봇을 위한 AI입니다. 로봇이 걷기, 물건 잡기 등의 동작을 학습하려면 수백만 번의 시행착오가 필요한데, 실제 로봇으로 이를 수행하면 시간과 비용이 막대하고 로봇이 파손될 위험이 있습니다.
 
-**Sim-to-Real** 접근법은 이 문제를 해결합니다:
-1. **시뮬레이션 환경 구축** — GPU 가속 물리 엔진(PhysX)으로 현실과 유사한 환경을 생성
-2. **대규모 병렬 학습** — 수천 개의 가상 로봇을 동시에 시뮬레이션하며 강화학습 수행
-3. **분산 학습으로 가속** — 여러 GPU/노드에 걸쳐 학습을 분산하여 수일 걸릴 작업을 수시간으로 단축
-4. **실제 로봇에 배포** — 학습된 정책(Policy)을 실제 로봇 하드웨어에 전이(Transfer)
+이 워크숍에서는 Sim-to-Real 접근법으로 두 가지 핵심 패러다임을 학습합니다:
 
-이 워크숍에서는 1~4단계를 AWS 인프라에서 실습합니다.
+| 구분 | 강화학습 (RL Policy) | Vision-Language-Action (VLA Model) |
+|------|---------------------|------------------------------------|
+| **대표 모델** | Isaac Lab + PPO (skrl) | NVIDIA GR00T N1.6/N1.7 (3B params) |
+| **입력** | 관절 상태, IMU, 접촉 센서 | 카메라 영상 + 자연어 명령 + 관절 상태 |
+| **출력** | 단일 태스크 관절 토크/위치 | 16-step 미래 액션 (action horizon) |
+| **학습 방식** | 시뮬레이션 시행착오로 from scratch | 대규모 사전학습 + 커스텀 데이터셋 fine-tuning |
+| **태스크 범위** | 단일 태스크 (예: 휴머노이드 보행) | 범용 (자연어로 다양한 태스크 지시) |
+| **이 워크숍 모듈** | Module 2-4 | Module 5-8 |
 
-### 아키텍처 설명
+두 패러다임 모두 **동일한 AWS 인프라**([Module 1](1.-infra-setup.md))를 공유하며, 학습 결과는 EFS를 통해 즉시 시각화·평가할 수 있습니다.
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+### 아키텍처
 
-AWS Batch에 NVIDIA Isaac Lab을 배포하는 전체 아키텍처 입니다. 인프라는 [AWS CDK](https://github.com/hi-space/aws-physical-ai-recipes/tree/main/isaac-lab-workshop/infra-multiuser-groot)로 정의되어 있으며, 한 번의 배포로 전체 환경이 자동 구성됩니다.
+전체 인프라는 [AWS CDK](https://github.com/hi-space/aws-physical-ai-recipes/tree/main/isaac-lab-workshop/infra-multiuser-groot)로 정의되어 있으며, 한 번의 배포로 RL과 VLA 모두에 필요한 환경이 자동 구성됩니다.
 
-* NVIDIA Isaac Sim 도커 이미지와 Isaac Lab Github 레포지토리로 Custom 도커 컨테이터를 빌드하고 테스트합니다. 이 작업은 Amazon DCV가 설치된 EC2 인스턴스에서 원격 데스크톱으로 진행할 수 있습니다. 검증된 컨테이너는 Amazon ECR에 업로드됩니다.
-* [AWS Batch 멀티노드 병렬 작업 (MNP, Multi-node parallel jobs)](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html)을 시작하면, 필요한 노드 수만큼 컴퓨팅과 네트워킹 리소스가 자동으로 프로비저닝됩니다. NVIDIA Isaac Lab이 노드 간 통신을 조율하여 분산 학습을 진행합니다.
-* [Amazon EFS](https://docs.aws.amazon.com/ko_kr/efs/latest/ug/whatisefs.html)는 배치 작업 실행 간 데이터를 영구 보관합니다. 메인 노드가 MNP 클러스터 전체의 학습 결과를 수집하고, 학습된 모델의 체크포인트와 로그를 EFS에 저장합니다.
-* 저장된 데이터는 추후 다른 AWS Batch 작업이나 EC2 인스턴스에서 분석 및 평가에 활용할 수 있습니다.
+* **DCV 인스턴스 (EC2 GPU)**: Isaac Sim/Isaac Lab Docker 이미지를 빌드하고 시뮬레이션을 시각적으로 확인합니다. 검증된 컨테이너는 Amazon ECR에 업로드됩니다.
+* **AWS Batch 멀티노드 병렬 작업 (MNP)**: [Multi-node parallel jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html)로 RL 학습과 GR00T fine-tuning을 분산 실행합니다. NCCL AllReduce로 노드 간 gradient를 동기화합니다.
+* **Amazon SageMaker** (선택): GR00T VLA 모델 학습 및 Real-time Endpoint 배포로 실시간 추론을 제공합니다.
+* **Amazon EFS**: 멀티노드 학습 중 체크포인트와 로그를 영구 보관하며, DCV 인스턴스에서 동일 EFS를 마운트하여 별도 파일 복사 없이 평가에 활용할 수 있습니다.
 
-### **실습 과정**
+***
+
+### 실습 과정
+
+```mermaid
+flowchart TB
+    Start["Module 1<br/>인프라 준비"] --> Branch{"학습 패러다임 선택"}
+
+    Branch -->|"RL Track"| RL2["Module 2<br/>Isaac Lab RL 학습"]
+    RL2 --> RL3["Module 3<br/>AWS Batch 분산 RL"]
+    RL3 --> RL4["Module 4<br/>학습 모델 시각화"]
+
+    Branch -->|"VLA Track"| VLA5["Module 5<br/>GR00T N1 추론 테스트"]
+    VLA5 --> VLA6["Module 6<br/>VLA Fine-tuning on AWS Batch"]
+    VLA5 --> VLA7["Module 7<br/>VLA Fine-tuning on SageMaker"]
+    VLA6 --> VLA8["Module 8<br/>Closed-loop 평가"]
+    VLA7 --> VLA8
+
+    style Start fill:#e3f2fd,stroke:#1976d2
+    style RL2 fill:#fff3e0,stroke:#f57c00
+    style RL3 fill:#fff3e0,stroke:#f57c00
+    style RL4 fill:#fff3e0,stroke:#f57c00
+    style VLA5 fill:#f1f8e9,stroke:#558b2f
+    style VLA6 fill:#f1f8e9,stroke:#558b2f
+    style VLA7 fill:#f1f8e9,stroke:#558b2f
+    style VLA8 fill:#f1f8e9,stroke:#558b2f
+```
+
+#### Module 1. 공통 인프라
 
 [**1. 클라우드 인프라 준비 및 환경 확인**](1.-infra-setup.md)
 
 AWS CDK로 환경을 자동으로 프로비저닝합니다. VPC, EC2 GPU 인스턴스(DCV), AWS Batch, EFS, ECR 등 모든 리소스가 한 번의 명령으로 생성됩니다. EC2 단일 인스턴스에서 시뮬레이션과 학습이 정상 작동하는지 확인한 후, 검증된 컨테이너를 Amazon ECR에 업로드합니다.
 
+#### RL Track — Isaac Lab으로 휴머노이드 로봇 강화학습
+
 [**2. Isaac Lab 강화학습 실행**](2.-isaac-lab.md)
 
-Isaac Lab을 사용하여 GPU 가속 물리 시뮬레이션 환경에서 휴머노이드 로봇의 보행을 강화학습(PPO)으로 학습합니다. 수천 개의 가상 로봇을 동시에 시뮬레이션하며 제어 정책(Policy)을 최적화합니다.
+Isaac Lab을 사용하여 GPU 가속 물리 시뮬레이션 환경에서 Unitree H1 휴머노이드 로봇의 거친 지형 보행을 [skrl](https://skrl.readthedocs.io/) PPO로 학습합니다. 단일 GPU에서 2,048개의 가상 로봇을 동시에 시뮬레이션하며 제어 정책(Policy)을 최적화합니다.
 
-[**3. AWS Batch를 활용한 대규모 학습**](3.-aws-batch.md)
+[**3. AWS Batch를 활용한 대규모 RL 학습**](3.-aws-batch.md)
 
-검증된 컨테이너로 AWS Batch 멀티노드 병렬 작업을 시작합니다. 여러 노드로 자동 확장되며, AWS Batch가 오케스트레이션을 담당합니다. 학습 중 체크포인트와 결과는 EFS에 저장되고, 로그는 CloudWatch에 기록됩니다.
+검증된 컨테이너로 AWS Batch 멀티노드 병렬 작업(MNP)을 시작합니다. 2노드 × 4 GPU = 총 8 GPU 환경에서 NCCL AllReduce로 gradient를 동기화하며, Compute Environment / Job Definition / Job Queue / Job 4단계 구성요소를 직접 만들어 봅니다. 학습 중 체크포인트와 TensorBoard 로그는 EFS에 저장되어 DCV에서 실시간으로 모니터링할 수 있습니다.
 
-[**4. IsaacSim에서 학습된 모델 로드**](4.-isaacsim.md)
+[**4. IsaacSim에서 학습된 모델 시각화**](4.-isaacsim.md)
 
-EC2 인스턴스에서 학습된 모델을 IsaacSim에 로드하여 시각적으로 성능을 확인합니다. 개선점을 파악하고 다시 학습하는 과정을 AWS Batch로 빠르게 반복하여, 새로운 로봇 동작을 신속하게 개발할 수 있습니다.
+EFS를 마운트한 Docker 컨테이너에서 학습된 RL 정책을 IsaacSim에 로드하여 추론(`play.py`) 모드로 실행합니다. 사전 학습된 72,000 iteration 모델과 직접 학습한 `best_agent.pt`를 비교하고, 검증된 체크포인트는 EFS에서 S3로 아카이빙하여 장기 보관합니다.
+
+#### VLA Track — GR00T Foundation Model로 자연어 기반 로봇 제어
 
 [**5. GR00T N1 추론 테스트**](5.-gr00t-n1.md)
 
-NVIDIA GR00T N1 Foundation Model을 활용하여 자연어 명령과 카메라 영상 기반의 로봇 제어를 테스트합니다. RL Policy와 VLA Model의 차이를 비교하고, Foundation Model 기반 로봇 제어의 가능성을 확인합니다.
+NVIDIA GR00T N1 (3B params) Vision-Language-Action 모델의 ZMQ 기반 Policy Server를 띄우고 base 모델 추론을 테스트합니다. 자연어 명령과 카메라 영상으로부터 16-step action horizon을 생성하는 receding horizon 제어 방식을 확인하고, fine-tuning에 사용할 `infra-groot-finetune` CDK 스택과 CodeBuild 이미지를 준비합니다.
 
-[**6. GR00T Fine-tuning on AWS Batch**](6.-gr00t-finetune.md)
+[**6. VLA Fine-tuning on AWS Batch**](6.-finetune-batch.md)
 
-커스텀 로봇 데이터셋에 맞게 GR00T VLA 모델을 fine-tuning합니다. CDK가 CodeBuild를 자동으로 트리거하여 학습 컨테이너를 빌드하고, AWS Batch에서 GPU 학습을 실행합니다. 학습 결과는 EFS를 통해 DCV에서 바로 확인할 수 있습니다.
+AWS Batch에서 커스텀 로봇 데이터셋(SO-101, leisaac-pick-orange)으로 GR00T VLA 모델을 fine-tuning합니다. 단일 노드 학습부터 Multi-Node Multi-GPU 분산 학습까지 다루며, CodeBuild가 자동 빌드한 학습 이미지를 사용합니다. 결과 체크포인트는 EFS에서 DCV로 바로 접근 가능합니다.
+
+[**7. VLA Fine-tuning on SageMaker**](7.-finetune-sagemaker.md)
+
+AWS SageMaker로 동일한 데이터셋을 학습합니다. Training Job → Model Registry → Real-time Endpoint 배포까지 전체 MLOps 파이프라인을 구성하여 REST API로 즉시 호출 가능한 추론 환경을 만듭니다. [Module 6](6.-finetune-batch.md)의 Batch 결과와 학습 곡선을 비교하여 두 인프라의 트레이드오프를 이해합니다.
+
+[**8. Isaac Lab Closed-loop 평가**](8.-evaluation.md)
+
+[LeIsaac](https://github.com/LightwheelAI/leisaac) 프레임워크로 fine-tuned GR00T 모델을 Isaac Lab 시뮬레이션에서 closed-loop으로 평가합니다. SO-101 로봇이 주방 씬에서 오렌지를 집어 접시에 올리는 태스크를 자연어 명령으로 수행하며, `eval_rounds` 기반 성공률을 측정합니다.
+
+#### 부록
 
 [**부록. 실무 팁 및 참고 사항**](99-tips.md)
 
@@ -74,3 +120,5 @@ S3, EFS, ECR 등 워크숍에서 활용하는 AWS 서비스의 사용법과 EC2 
 * [**\[GitHub\]** AWS Physical AI Recipes — Isaac Lab Workshop CDK](https://github.com/hi-space/aws-physical-ai-recipes/tree/main/isaac-lab-workshop/infra-multiuser-groot)
 * [**\[Workshop Studio\]** NVIDIA Isaac Lab on AWS](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US)
 * [**\[AWS Blog\]** Scale Reinforcement Learning with AWS Batch Multi-Node Parallel Jobs](https://aws.amazon.com/blogs/hpc/scale-reinforcement-learning-with-aws-batch-multi-node-parallel-jobs/)
+* [**\[NVIDIA\]** Isaac Lab Documentation](https://isaac-sim.github.io/IsaacLab/)
+* [**\[NVIDIA\]** GR00T Foundation Model](https://developer.nvidia.com/gr00t)
