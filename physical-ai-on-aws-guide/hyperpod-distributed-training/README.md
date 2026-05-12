@@ -2,7 +2,7 @@
 description: SageMaker HyperPod로 Physical AI 분산 학습 실행하기
 ---
 
-# HyperPod 분산 학습
+# RL/VLA 모델 HyperPod 분산 학습
 
 이 실습에서는 AWS SageMaker HyperPod를 활용해 Physical AI (VLA/RL) 모델의 분산 학습 환경을 구축하고, 데이터 준비부터 학습 실행, MLflow 모니터링까지 전체 파이프라인을 실습합니다.
 
