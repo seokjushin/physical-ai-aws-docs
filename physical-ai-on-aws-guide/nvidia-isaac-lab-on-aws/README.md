@@ -53,7 +53,7 @@ flowchart TB
     RL2 --> RL3["Module 3<br/>AWS Batch 분산 RL"]
     RL3 --> RL4["Module 4<br/>학습 모델 시각화"]
 
-    Branch -->|"VLA Track"| VLA5["Module 5<br/>GR00T N1 추론 테스트"]
+    Branch -->|"VLA Track"| VLA5["Module 5<br/>VLA Fine-tuning 인프라 배포"]
     VLA5 --> VLA6["Module 6<br/>VLA Fine-tuning on AWS Batch"]
     VLA5 --> VLA7["Module 7<br/>VLA Fine-tuning on SageMaker"]
     VLA6 --> VLA8["Module 8<br/>Closed-loop 평가"]
@@ -91,9 +91,9 @@ EFS를 마운트한 Docker 컨테이너에서 학습된 RL 정책을 IsaacSim에
 
 #### VLA Track — GR00T Foundation Model로 자연어 기반 로봇 제어
 
-[**5. GR00T N1 추론 테스트**](5.-gr00t-n1.md)
+[**5. VLA Fine-tuning 인프라 배포**](5.-gr00t-n1.md)
 
-NVIDIA GR00T N1 (3B params) Vision-Language-Action 모델의 ZMQ 기반 Policy Server를 띄우고 base 모델 추론을 테스트합니다. 자연어 명령과 카메라 영상으로부터 16-step action horizon을 생성하는 receding horizon 제어 방식을 확인하고, fine-tuning에 사용할 `infra-groot-finetune` CDK 스택과 CodeBuild 이미지를 준비합니다.
+NVIDIA GR00T N1 (3B params) Vision-Language-Action 모델의 fine-tuning에 사용할 `infra-groot-finetune` CDK 스택을 배포하여 CodeBuild·ECR·AWS Batch 환경을 구성하고, 빌드된 컨테이너 이미지로 ZMQ 기반 Policy Server를 띄워 base 모델 추론까지 검증합니다. 자연어 명령과 카메라 영상으로부터 16-step action horizon을 생성하는 receding horizon 제어 방식을 함께 확인합니다.
 
 [**6. VLA Fine-tuning on AWS Batch**](6.-finetune-batch.md)
 

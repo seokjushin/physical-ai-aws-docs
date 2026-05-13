@@ -15,7 +15,7 @@
   * [2. Isaac Lab 강화학습 실행](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/2.-isaac-lab.md)
   * [3. AWS Batch를 활용한 대규모 강화학습](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/3.-aws-batch.md)
   * [4. IsaacSim에서 학습된 모델 로드](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/4.-isaacsim.md)
-  * [5. GR00T N1 추론 테스트](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/5.-gr00t-n1.md)
+  * [5. VLA Fine-tuning 인프라 배포](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/5.-gr00t-n1.md)
   * [6. AWS Batch를 활용한 VLA Fine-tuning](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/6.-finetune-batch.md)
   * [7. SageMaker를 활용한 VLA Fine-tuning](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/7.-finetune-sagemaker.md)
   * [8. Closed-loop 평가](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/8.-evaluation.md)
