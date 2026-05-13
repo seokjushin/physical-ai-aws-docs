@@ -19,6 +19,7 @@
   * [6. AWS Batch를 활용한 VLA Fine-tuning](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/6.-finetune-batch.md)
   * [7. SageMaker를 활용한 VLA Fine-tuning](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/7.-finetune-sagemaker.md)
   * [8. Closed-loop 평가](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/8.-evaluation.md)
+  * [9. Edge Operation](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/9.-edge-operation.md)
   * [부록. 실무 팁 및 참고 사항](physical-ai-on-aws-guide/nvidia-isaac-lab-on-aws/99-tips.md)
 * [RL/VLA 모델 HyperPod 분산 학습](physical-ai-on-aws-guide/hyperpod-distributed-training/README.md)
   * [1. 인프라 배포](physical-ai-on-aws-guide/hyperpod-distributed-training/1.-infra-deploy.md)
