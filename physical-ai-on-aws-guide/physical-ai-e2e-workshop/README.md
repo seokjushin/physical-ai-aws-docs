@@ -34,7 +34,7 @@ Physical AI는 실제 물리 세계에서 동작하는 로봇을 위한 AI입니
 
 ### 아키텍처
 
-전체 인프라는 [AWS CDK](https://github.com/hi-space/aws-physical-ai-recipes/tree/main/isaac-lab-workshop/infra-multiuser-groot)로 정의되어 있으며, 한 번의 배포로 RL과 VLA 모두에 필요한 환경이 자동 구성됩니다.
+전체 인프라는 [AWS CDK](https://github.com/hi-space/aws-physical-ai-recipes/tree/main/physical-ai-e2e-workshop/infra/isaaclab)로 정의되어 있으며, 한 번의 배포로 RL과 VLA 모두에 필요한 환경이 자동 구성됩니다.
 
 * **DCV 인스턴스 (EC2 GPU)**: Isaac Sim/Isaac Lab Docker 이미지를 빌드하고 시뮬레이션을 시각적으로 확인합니다. 검증된 컨테이너는 Amazon ECR에 업로드됩니다.
 * **AWS Batch 멀티노드 병렬 작업 (MNP)**: [Multi-node parallel jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html)로 RL 학습과 GR00T fine-tuning을 분산 실행합니다. NCCL AllReduce로 노드 간 gradient를 동기화합니다.
@@ -93,7 +93,7 @@ EFS를 마운트한 Docker 컨테이너에서 학습된 RL 정책을 IsaacSim에
 
 [**5. VLA Fine-tuning 인프라 배포**](5.-train-infra-setup.md)
 
-NVIDIA GR00T N1 (3B params) Vision-Language-Action 모델의 fine-tuning에 사용할 `infra-groot-finetune` CDK 스택을 배포하여 CodeBuild·ECR·AWS Batch 환경을 구성하고, 빌드된 컨테이너 이미지로 ZMQ 기반 Policy Server를 띄워 base 모델 추론까지 검증합니다. 자연어 명령과 카메라 영상으로부터 16-step action horizon을 생성하는 receding horizon 제어 방식을 함께 확인합니다.
+NVIDIA GR00T N1 (3B params) Vision-Language-Action 모델의 fine-tuning에 사용할 `infra/groot-finetune` CDK 스택을 배포하여 CodeBuild·ECR·AWS Batch 환경을 구성하고, 빌드된 컨테이너 이미지로 ZMQ 기반 Policy Server를 띄워 base 모델 추론까지 검증합니다. 자연어 명령과 카메라 영상으로부터 16-step action horizon을 생성하는 receding horizon 제어 방식을 함께 확인합니다.
 
 [**6. VLA Fine-tuning on AWS Batch**](6.-vla-train-batch.md)
 
@@ -117,7 +117,7 @@ S3, EFS, ECR 등 워크숍에서 활용하는 AWS 서비스의 사용법과 EC2 
 
 ### References
 
-* [**\[GitHub\]** AWS Physical AI Recipes — Isaac Lab Workshop CDK](https://github.com/hi-space/aws-physical-ai-recipes/tree/main/isaac-lab-workshop/infra-multiuser-groot)
+* [**\[GitHub\]** AWS Physical AI Recipes — Isaac Lab Workshop CDK](https://github.com/hi-space/aws-physical-ai-recipes/tree/main/physical-ai-e2e-workshop/infra/isaaclab)
 * [**\[Workshop Studio\]** NVIDIA Isaac Lab on AWS](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US)
 * [**\[AWS Blog\]** Scale Reinforcement Learning with AWS Batch Multi-Node Parallel Jobs](https://aws.amazon.com/blogs/hpc/scale-reinforcement-learning-with-aws-batch-multi-node-parallel-jobs/)
 * [**\[NVIDIA\]** Isaac Lab Documentation](https://isaac-sim.github.io/IsaacLab/)
