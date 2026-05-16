@@ -179,7 +179,7 @@ HyperPod에서 학습한 VLA 모델을 Isaac Lab on AWS EC2에서 closed-loop �
 
 ## References
 
-* [**[GitHub]** AWS Physical AI Recipes — HyperPod Workshop CDK](https://github.com/hi-space/aws-physical-ai-recipes/tree/main/training/hyperpod/cdk)
+* [**[GitHub]** AWS Physical AI Recipes — HyperPod Workshop CDK](https://github.com/hi-space/aws-physical-ai-recipes/tree/main/hyperpod-training/infra)
 * [**[NVIDIA GR00T]** GR00T N1.7 Documentation](https://docs.nvidia.com/isaac/foundation_models/gr00t/gr00t-n1/)
 * [**[AWS SageMaker HyperPod]** Official Documentation](https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod.html)
 * [**[Companion Workshop]** Physical AI E2E 워크샵](../physical-ai-e2e-workshop/README.md)
