@@ -1,0 +1,4 @@
+# OMC (oh-my-claudecode) state files
+.omc/
+.claude/
+.vscode/
