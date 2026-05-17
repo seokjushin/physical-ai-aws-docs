@@ -93,7 +93,7 @@ EFS를 마운트한 Docker 컨테이너에서 학습된 RL 정책을 IsaacSim에
 
 [**5. VLA Fine-tuning 인프라 배포**](5.-train-infra-setup.md)
 
-NVIDIA GR00T N1 (3B params) Vision-Language-Action 모델의 fine-tuning에 사용할 `infra/groot-finetune` CDK 스택을 배포하여 CodeBuild·ECR·AWS Batch 환경을 구성하고, 빌드된 컨테이너 이미지로 ZMQ 기반 Policy Server를 띄워 base 모델 추론까지 검증합니다. 자연어 명령과 카메라 영상으로부터 16-step action horizon을 생성하는 receding horizon 제어 방식을 함께 확인합니다.
+NVIDIA GR00T N1 (3B params) Vision-Language-Action 모델의 fine-tuning에 사용할 `infra/groot` CDK 스택을 배포하여 CodeBuild·ECR·AWS Batch 환경을 구성하고, 빌드된 컨테이너 이미지로 ZMQ 기반 Policy Server를 띄워 base 모델 추론까지 검증합니다. 자연어 명령과 카메라 영상으로부터 16-step action horizon을 생성하는 receding horizon 제어 방식을 함께 확인합니다.
 
 [**6. VLA Fine-tuning on AWS Batch**](6.-vla-train-batch.md)
 
