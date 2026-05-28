@@ -11,6 +11,7 @@
 ## Physical AI on AWS 구현 가이드 <a href="#guide" id="guide"></a>
 
 * [Physical AI E2E 워크샵](guide/e2e-workshop/README.md)
+  * [0. NX1 환경 셀프 배포 가이드](guide/e2e-workshop/0.-nx1-self-deploy.md)
   * [1. 클라우드 인프라 준비 및 환경 확인](guide/e2e-workshop/1.-isaaclab-infra-setup.md)
   * [2. Isaac Lab 강화학습 실행](guide/e2e-workshop/2.-isaaclab-rl-train.md)
   * [3. AWS Batch를 활용한 대규모 강화학습](guide/e2e-workshop/3.-isaaclab-rl-train-batch.md)
