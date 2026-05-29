@@ -2,3 +2,6 @@
 .omc/
 .claude/
 .vscode/
+
+# Claude Code project guidance (local only)
+CLAUDE.md
