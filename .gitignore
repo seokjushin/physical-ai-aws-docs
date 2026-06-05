@@ -5,3 +5,10 @@
 
 # Claude Code project guidance (local only)
 CLAUDE.md
+
+# macOS
+.DS_Store
+
+# consensus-review tooling output (local only)
+.consensus-review-output/
+consensus-review-*.md
